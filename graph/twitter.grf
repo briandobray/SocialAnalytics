@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Graph author="jirtob" created="Thu Jun 20 10:07:05 CEST 2013" guiVersion="3.4.2.P" id="1371717262716" licenseType="Commercial" modified="Wed Oct 23 10:06:23 CEST 2013" modifiedBy="jirtob" name="TwitterDownload" revision="1.49" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata2" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="," name="GD_dataset_twitter" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n\\|\r\n" recordSize="-1" type="delimited">
+<Field eofAsDelimiter="false" name="text" nullable="true" shift="0" size="0" type="string"/>
+<Field eofAsDelimiter="false" name="favorites" nullable="true" shift="0" size="0" type="integer"/>
+<Field eofAsDelimiter="false" name="retweets" nullable="true" shift="0" size="0" type="integer"/>
+<Field eofAsDelimiter="false" format="yyyy-MM-dd HH:mm:ss" name="tweet" nullable="true" shift="0" size="0" type="date"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0">
+<Record fieldDelimiter="|" name="recordName1" recordDelimiter="\n" type="delimited">
+<Field name="response" type="string"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata1" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="|" name="recordName2" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\n" type="delimited">
+<Field name="text" type="string"/>
+<Field name="favoriteCount" type="string"/>
+<Field name="retweetCount" type="string"/>
+<Field name="date" type="string"/>
+</Record>
+</Metadata>
+<Property fileURL="workspace.prm" id="GraphParameter0"/>
+<Dictionary/>
+</Global>
+<Phase number="0">
+<Node dataset="dataset.twitter" datasetFieldMappings="{&quot;gd_dataset&quot;:{&quot;datasetId&quot;:&quot;dataset.twitter&quot;,&quot;datasetTitle&quot;:&quot;Twitter&quot;,&quot;attributes&quot;:[{&quot;gd_dataset_attribute&quot;:{&quot;id&quot;:&quot;attr.twitter.text&quot;,&quot;title&quot;:&quot;Text&quot;,&quot;prettyId&quot;:&quot;attr_twitter_text&quot;,&quot;displayForms&quot;:[{&quot;gd_dataset_attribute_display_form&quot;:{&quot;id&quot;:&quot;label.twitter.text&quot;,&quot;title&quot;:&quot;Text&quot;,&quot;prettyId&quot;:&quot;text&quot;,&quot;assignedMetadataField&quot;:&quot;text&quot;,&quot;referenceKey&quot;:true}}],&quot;assignedMetadataField&quot;:null,&quot;selectedDisplayForm&quot;:{&quot;gd_dataset_attribute_display_form&quot;:{&quot;id&quot;:&quot;label.twitter.text&quot;,&quot;title&quot;:&quot;Text&quot;,&quot;prettyId&quot;:&quot;text&quot;,&quot;assignedMetadataField&quot;:&quot;text&quot;,&quot;referenceKey&quot;:true}}}}],&quot;referencedAttributes&quot;:[],&quot;dateAttributes&quot;:[{&quot;gd_dataset_date_attribute&quot;:{&quot;id&quot;:&quot;tweet.date&quot;,&quot;title&quot;:&quot;Date (tweet)&quot;,&quot;prettyId&quot;:&quot;tweet&quot;,&quot;assignedMetadataField&quot;:&quot;tweet&quot;,&quot;displayForms&quot;:[{&quot;gd_dataset_attribute_display_form&quot;:{&quot;id&quot;:&quot;tweet.date.yyyymmdd&quot;,&quot;title&quot;:&quot;yyyy-mm-dd (tweet)&quot;,&quot;prettyId&quot;:&quot;tweet_date_yyyymmdd&quot;,&quot;assignedMetadataField&quot;:null,&quot;referenceKey&quot;:true}}],&quot;selectedDisplayForm&quot;:{&quot;gd_dataset_attribute_display_form&quot;:{&quot;id&quot;:&quot;tweet.date.yyyymmdd&quot;,&quot;title&quot;:&quot;yyyy-mm-dd (tweet)&quot;,&quot;prettyId&quot;:&quot;tweet_date_yyyymmdd&quot;,&quot;assignedMetadataField&quot;:null,&quot;referenceKey&quot;:true}},&quot;associatedFact&quot;:null}}],&quot;simpleFacts&quot;:[{&quot;gd_dataset_fact&quot;:{&quot;id&quot;:&quot;fact.twitter.favorites&quot;,&quot;title&quot;:&quot;Favorites&quot;,&quot;prettyId&quot;:&quot;favorites&quot;,&quot;type&quot;:&quot;DECIMAL&quot;,&quot;assignedMetadataField&quot;:&quot;favorites&quot;}},{&quot;gd_dataset_fact&quot;:{&quot;id&quot;:&quot;fact.twitter.retweets&quot;,&quot;title&quot;:&quot;Retweets&quot;,&quot;prettyId&quot;:&quot;retweets&quot;,&quot;type&quot;:&quot;DECIMAL&quot;,&quot;assignedMetadataField&quot;:&quot;retweets&quot;}}],&quot;dateFacts&quot;:[],&quot;fieldsWithMetadataConflict&quot;:[],&quot;entitiesWithoutMetadata&quot;:[],&quot;entitiesWithoutValue&quot;:[],&quot;datesWithFactConflict&quot;:[],&quot;unassigneddateFacts&quot;:[]}}" enabled="enabled" guiName="GD Dataset Writer" guiX="709" guiY="58" id="GD_DATASET_WRITER0" retriesInterval="60" retriesNumber="5" type="GD_DATASET_WRITER"/>
+<Node charset="UTF-8" enabled="enabled" fileURL="port:$0.response:discrete" guiName="JSONReader" guiX="265" guiY="58" id="JSON_READER0" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<Context xpath="/root/object/statuses" outPort="0">
+  <Mapping cloverField="text" xpath="text"/>
+  <Mapping cloverField="retweetCount" xpath="retweet_x005fcount"/>
+  <Mapping cloverField="favoriteCount" xpath="favorite_x005fcount"/>
+  <Mapping cloverField="date" xpath="created_x005fat"/>
+</Context>]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Reformat" guiX="477" guiY="58" id="REFORMAT0" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+
+// Transforms input record into output record.
+function integer transform() {
+	$out.0.text = $in.0.text;
+	$out.0.favorites = str2integer($in.0.favoriteCount);
+	$out.0.retweets = str2integer($in.0.retweetCount);
+	$out.0.tweet = str2date($in.0.date,"EEE MMM d HH:mm:ss Z yyyy");
+
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node authConfiguration="{&quot;authMethod&quot;:&quot;OAUTH_1&quot;,&quot;authCredentials&quot;:{&quot;CONSUMER_SECRET&quot;:&quot;PxHrLxmM5gcwI0gXF9i/6L07gk4sUCT5y8dqNol87b8TDNk1A9jBriCQ7o+rlvyI&quot;,&quot;TOKEN_SECRET&quot;:&quot;PnfyxvdjueuEsa5LmiCaCm1wqNCrKSz0ByBwNcxG5qtCVhFic26GkPDqsjAKPGry&quot;,&quot;TOKEN_KEY&quot;:&quot;1535401526-WmDlRqbwR4SYY4lst3MpMRTKxBddX9RvPZ4QPbQ&quot;,&quot;CONSUMER_KEY&quot;:&quot;c2oRg3ZR5N3ILSGwNWxolA&quot;}}" authenticationMethod="BASIC" charset="UTF-8" ctlFunctionsSource="//#CTL2&#10;&#10;/**&#10; * Generates request parameters (usually page numbers, offsets, timestamps, signature hashes,etc.)&#10; * Called before each request.&#10; *&#10; * Last response is is only defined if iteration number is greater than one. Therefore, for the very first request&#10; * lastResponseStatus is 200, lastResponseHeaders and lastResponseBody are empty.&#10; *&#10; * inputEdgeRecord - contains fields of the input edge record&#10; * iterationNumber - starts at 1&#10; * lastResponseStatus - HTTP status of the previous request&#10; * lastResponseHeaders - HTTP headers of the previous request&#10; * lastResponseBody -  body of the previous request&#10; *&#10; * returns a map of params that can be used in the request URL&#10;**/&#10;function map[string, string] generateRequestParameters(map[string, string] inputEdgeParams, integer iterationNumber, integer lastResponseStatus, map[string, string]lastResponseHeaders, string lastResponseBody) {&#10;&#9;&#10;&#9;// make a copy of input params&#10;    //map[string, string] requestParams = inputEdgeParams;&#10;&#10;    /**&#10;     * PAGING - common use cases&#10;http://api.scup.com.br/1.0/itens/${monitoring_id}?page=${page_no}&amp;time=${timestamp}&amp;publickey=${publickey}&amp;signature=${signature}&amp;ipp=100     **/&#10;&#10;&#9;// make a copy of input params&#10;    map[string, string] requestParams = inputEdgeParams;&#10;&#10;    /**&#10;     * PAGING - common use cases&#10;http://api.scup.com.br/1.0/itens/${monitoring_id}/?time=${time}&amp;publickey=${publickey}&amp;signature=${signature}&amp;ipp=15&amp;page=${page}&amp;data=15-01-2011|25-01-2011'&#10;     **/&#10;&#10;    /** Using pages - since all param values must be string, we call toString() function **/    &#10;    integer computedPageNumber = iterationNumber % 15;&#10;    if (computedPageNumber == 0) {&#10;    &#9;computedPageNumber = 15;&#10;    }&#10;    requestParams[&quot;page&quot;] = toString(computedPageNumber);&#10;    if (iterationNumber &gt; 15 &amp;&amp; (iterationNumber % 15 == 1)) {&#10;    &#9;// since max number of pages is 15 for SCUP, we must filter further by date &quot;data&quot;   &#9;    &#9;&#10;&#10;    &#9;// cut off prefix &quot;data&quot;:&quot; and trailing quote&#10;        // the length of date part is (length of whole string  -  prefix length  -  1 for trailing quote)&#10;       &#9;printLog(info, &quot;Iteration number: &quot; + iterationNumber);&#10;   &#9;&#10;    &#9; }    &#10;    return requestParams;&#10;    &#10;}&#10;&#10;/**&#10; * Determines the outcome of the response. Used for controlling the paging workflow and detecting errors.&#10; * Called after each request response.&#10; *&#10; * responseStatus - response HTTP status&#10; * responseHeaders - response HTTP headers&#10; * responseBody -  response body&#10; *&#10; * returns&#10; *  CONTINUE - continue to next iteration (e.g., next page)&#10; *  DONE_NO_OUTPUT - last iteration finished, no data will be sent to the output port for the last iteration (no data received from the last iteration)&#10; *  DONE_WITH_OUTPUT - last iteration finished, data will be sent to the output for the last iteration (data received from the last iteration)&#10; *  RETRY - retry the last failed request&#10; *  FATAL_ERROR - fatal error, aborts the HTTP connector run&#10;**/&#10;function string checkResponse(integer responseStatus, map[string, string] responseHeaders, string responseBody) {&#10;  &#10;&#10;    // Example response handling&#10;    if (responseStatus &gt;= 200  &amp;&amp;  responseStatus &lt; 300) {&#10;         return &quot;DONE_WITH_OUTPUT&quot;;&#10;     }&#10;     else if (responseStatus == 404) {&#10;         // HTTP status &quot;404 - NOT FOUND&quot; could mean there are no more pages or records&#10;         return &quot;DONE_NO_OUTPUT&quot;;&#10;     }&#10;     else if (responseStatus &gt;= 500 || responseBody.indexOf('{&quot;error&quot;: &quot;just a temporary error&quot;}') &gt; -1) {&#10;    //     // Internal server errors could be temporary (this sends the last response to the error output port)&#10;         return &quot;RETRY&quot;;&#10;     }&#10;    else {&#10;    //     // Otherwise abort the HTTP connector run (this sends the last response to the error output port)&#10;         return &quot;FATAL_ERROR&quot;;&#10;     }&#10;}&#10;&#10;/**&#10; * Updates the request params before each request retry attempt if it failed previously.&#10; * Useful for resetting authorization parameter (signatures, tokens, etc.), updating timestamp, etc.&#10; *&#10; * Optional. When not defined, the request stays the same.&#10; *&#10; * failedRequestParams original parameters of request which failed and should be retried&#10; * retryNumber number of current retry, &quot;1&quot; for the first retry&#10; * lastResponseStatus - HTTP status of the failed request&#10; * lastResponseHeaders - HTTP headers of the failed request&#10; * lastResponseBody -  body of the failed request&#10; *&#10; * returns map of the modified params for the retry request&#10;**/&#10;" enabled="enabled" guiName="Twitter API call" guiX="63" guiY="58" id="TWITTER_API_CALL1" maxPageNumber="50" requestMethod="GET" type="GENERIC_REST_CONNECTOR">
+<attr name="url"><![CDATA[https://api.twitter.com/1.1/search/tweets.json?q=gooddata&result_type=mixed&count=100
+]]></attr>
+</Node>
+<Edge debugMode="true" fromNode="JSON_READER0:0" guiBendpoints="" guiRouter="Manhattan" id="Edge1" inPort="Port 0 (in)" metadata="Metadata1" outPort="Port 0 (out)" toNode="REFORMAT0:0"/>
+<Edge debugMode="true" fromNode="REFORMAT0:0" guiBendpoints="" guiRouter="Manhattan" id="Edge2" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (out)" toNode="GD_DATASET_WRITER0:0"/>
+<Edge debugMode="true" fromNode="TWITTER_API_CALL1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge0" inPort="Port 0 (in)" metadata="Metadata0" outPort="Port 0 (output)" toNode="JSON_READER0:0"/>
+</Phase>
+</Graph>
